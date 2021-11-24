@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Ver Empleado{% endblock titulo %}</title>
+</head>
+    {% block cuerpo %}
+        <body>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Salario</th>
+                        <th>CRUD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in object_list %}
+                        <tr>
+                            <td>{{empleado.nombre}}</td>
+                            <td>{{empleado.salario}}</td>
+                            <td>
+                                <a href="{% url 'edit_empleado' empleado.id %}">EDITAR</a> -
+                                <a href="{% url 'del_empleado' empleado.id %}">ELIMINAR</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button style="margin-top: 10px;"><a href="/empleado/add">CREATE</a></button>
+        </body>
+    {% endblock %}
+</html>

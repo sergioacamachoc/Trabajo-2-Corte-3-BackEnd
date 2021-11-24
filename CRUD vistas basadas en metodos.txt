@@ -1,0 +1,47 @@
+from django.shortcuts import redirect, render
+from .models import Empleado
+from .forms import EmpleadoForm
+# Create your views here.
+
+def empelado_view(request):
+    empleados= Empleado.objects.all()
+    data={
+        "empleados":empleados,
+    }
+    return render(request, 'empleado_view.html', data)
+
+def add_empleado(request):
+    if request.method == 'GET':
+        form=EmpleadoForm
+        data={
+            "form":form,
+        }
+    else:
+        form=EmpleadoForm(request.POST)
+        data={
+            "form":form,
+        }
+        if form.is_valid():
+            form.save()
+            return redirect('/empleado')
+
+    return render(request, 'add_empleado.html', data)
+
+def edit_empleado(request, id):
+    empleado=Empleado.objects.get(id=id)
+    if request.method=='GET':
+        form=EmpleadoForm(instance=empleado)
+        data={
+            'form': form
+        }
+    else:
+        form=EmpleadoForm(request.POST, instance=empleado)
+        if form.is_valid():
+            form.save()
+            return redirect("/empleado")
+    return render(request, 'edit_empleado.html', data)
+
+def del_empleado(request, id):
+    empleado=Empleado.objects.get(id=id)
+    empleado.delete()
+    return redirect('/empleado')

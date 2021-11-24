@@ -1,0 +1,13 @@
+{% extends 'get_empleado.html' %}
+
+{% block titulo %}Edit Empleados{% endblock %}
+
+{% block cuerpo %}
+<h1>Edit Empleados</h1>
+
+<form method="post"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">edit & submit</button>
+</form>
+{% endblock %}
